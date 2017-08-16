@@ -18,6 +18,7 @@ def deleteMatches():
     cursor = database.cursor()
     try:
         cursor.execute("DELETE FROM match")
+        cursor.execute("UPDATE player SET wins = 0, total_matches = 0")
         database.commit()
     except:
         database.rollback()
@@ -98,6 +99,15 @@ def reportMatch(winner, loser):
       loser:  the id number of the player who lost
     """
  
+    database = connect()
+    cursor = database.cursor()
+    try:
+        cursor.execute("UPDATE player SET wins = wins + 1, total_matches = total_matches + 1 WHERE id = %s", (winner,))
+        cursor.execute("UPDATE player SET total_matches = total_matches + 1 WHERE id = %s", (loser,))
+        database.commit()
+    except:
+        database.rollback()
+    database.close()
  
 def swissPairings():
     """Returns a list of pairs of players for the next round of a match.
