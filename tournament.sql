@@ -6,12 +6,19 @@
 -- You can write comments in this file by starting them with two dashes, like
 -- these lines here.
 
-create table player (
+CREATE DATABASE tournament;
+
+-- connect to the tournament database
+\c tournament
+
+-- create schema
+CREATE TABLE player (
     id serial primary key,
     name text,
-    wins integer);
+    wins integer,
+    total_matches integer);
 
-create table match (
+CREATE TABLE match (
     player1_id integer references player(id),
     player2_id integer references player(id),
     round integer,

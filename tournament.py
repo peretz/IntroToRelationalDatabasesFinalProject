@@ -58,9 +58,8 @@ def registerPlayer(name):
 
     database = connect()
     cursor = database.cursor()
-
     try:
-        cursor.execute("INSERT INTO player(name, wins) VALUES (%s, 0)", (name,))
+        cursor.execute("INSERT INTO player(name, wins, total_matches) VALUES (%s, 0, 0)", (name,))
         database.commit()
     except:
         database.rollback()
@@ -81,6 +80,14 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
+
+    database = connect()
+    cursor = database.cursor()
+    cursor.execute("SELECT id, name, wins, total_matches FROM player ORDER BY wins DESC, total_matches, name")
+    standings = cursor.fetchall()
+    database.close()
+
+    return standings
 
 
 def reportMatch(winner, loser):
