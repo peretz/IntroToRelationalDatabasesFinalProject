@@ -39,16 +39,7 @@ def countPlayers():
     """Returns the number of players currently registered."""
 
     database = connect()
-
     cursor = database.cursor()
-#    cursor.execute("""SELECT table_name FROM information_schema.tables
-#        WHERE table_schema = 'public'""")
-#    for table in cursor.fetchall():
-#        print(table)
-#
-#    cursor.execute("INSERT INTO player(name, wins) VALUES ('Johny', 2);")
-#    database.commit()
-
     cursor.execute("SELECT count(*) FROM player;")
     total_players = cursor.fetchone()[0]
     database.close()
