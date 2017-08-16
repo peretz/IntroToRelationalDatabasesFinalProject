@@ -14,14 +14,46 @@ def connect():
 def deleteMatches():
     """Remove all the match records from the database."""
 
+    database = connect()
+    cursor = database.cursor()
+    try:
+        cursor.execute("DELETE FROM match")
+        database.commit()
+    except:
+        database.rollback()
+    database.close()
 
 def deletePlayers():
     """Remove all the player records from the database."""
 
+    database = connect()
+    cursor = database.cursor()
+    try:
+        cursor.execute("DELETE FROM player")
+        database.commit()
+    except:
+        database.rollback()
+    database.close()
 
 def countPlayers():
     """Returns the number of players currently registered."""
 
+    database = connect()
+
+    cursor = database.cursor()
+#    cursor.execute("""SELECT table_name FROM information_schema.tables
+#        WHERE table_schema = 'public'""")
+#    for table in cursor.fetchall():
+#        print(table)
+#
+#    cursor.execute("INSERT INTO player(name, wins) VALUES ('Johny', 2);")
+#    database.commit()
+
+    cursor.execute("SELECT count(*) FROM player;")
+    total_players = cursor.fetchone()[0]
+    database.close()
+
+    return total_players
 
 def registerPlayer(name):
     """Adds a player to the tournament database.
@@ -32,6 +64,17 @@ def registerPlayer(name):
     Args:
       name: the player's full name (need not be unique).
     """
+
+    database = connect()
+    cursor = database.cursor()
+
+    try:
+        cursor.execute("INSERT INTO player(name, wins) VALUES (%s, 0)", (name,))
+        database.commit()
+    except:
+        database.rollback()
+
+    database.close()
 
 
 def playerStandings():
