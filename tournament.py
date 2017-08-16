@@ -125,4 +125,14 @@ def swissPairings():
         name2: the second player's name
     """
 
+    database = connect()
+    cursor = database.cursor()
+    cursor.execute("SELECT id, name FROM player ORDER BY wins DESC, total_matches, name")
+    standings = cursor.fetchall()
+    pairings = list()
+    for i in range (0, len(standings), 2):
+        pairings.append(standings[i] + standings[i+1])
+        
+    database.close()
 
+    return pairings
