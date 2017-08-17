@@ -17,7 +17,6 @@ def deleteMatches():
     database = connect()
     cursor = database.cursor()
     try:
-        cursor.execute("DELETE FROM match")
         cursor.execute("UPDATE player SET wins = 0, total_matches = 0")
         database.commit()
     except:

@@ -17,9 +17,3 @@ CREATE TABLE player (
     name text,
     wins integer,
     total_matches integer);
-
-CREATE TABLE match (
-    player1_id integer references player(id),
-    player2_id integer references player(id),
-    round integer,
-    winner_id integer references player(id));
