@@ -17,7 +17,7 @@ def deleteMatches():
     database = connect()
     cursor = database.cursor()
     try:
-        cursor.execute("UPDATE player SET wins = 0, total_matches = 0")
+        cursor.execute("DELETE FROM match")
         database.commit()
     except:
         database.rollback()
@@ -59,7 +59,7 @@ def registerPlayer(name):
     database = connect()
     cursor = database.cursor()
     try:
-        cursor.execute("INSERT INTO player(name, wins, total_matches) VALUES (%s, 0, 0)", (name,))
+        cursor.execute("INSERT INTO player(name) VALUES (%s)", (name,))
         database.commit()
     except:
         database.rollback()
@@ -83,7 +83,7 @@ def playerStandings():
 
     database = connect()
     cursor = database.cursor()
-    cursor.execute("SELECT id, name, wins, total_matches FROM player ORDER BY wins DESC, total_matches, name")
+    cursor.execute("SELECT * FROM player_stats")
     standings = cursor.fetchall()
     database.close()
 
@@ -101,8 +101,7 @@ def reportMatch(winner, loser):
     database = connect()
     cursor = database.cursor()
     try:
-        cursor.execute("UPDATE player SET wins = wins + 1, total_matches = total_matches + 1 WHERE id = %s", (winner,))
-        cursor.execute("UPDATE player SET total_matches = total_matches + 1 WHERE id = %s", (loser,))
+        cursor.execute("INSERT INTO match(winner, loser) VALUES (%s, %s)", (winner, loser,))
         database.commit()
     except:
         database.rollback()
@@ -126,7 +125,7 @@ def swissPairings():
 
     database = connect()
     cursor = database.cursor()
-    cursor.execute("SELECT id, name FROM player ORDER BY wins DESC, total_matches, name")
+    cursor.execute("SELECT id, name FROM player_stats")
     standings = cursor.fetchall()
     pairings = list()
     for i in range (0, len(standings), 2):
