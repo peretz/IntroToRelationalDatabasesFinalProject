@@ -50,5 +50,5 @@ This corroborates that the database and module have been successfully implemente
 ## Final thoughts.
 
 Now you are ready to use the tournament.py module to plan your Swiss system tournament. For any
-further questions, check Udacity's documentation for the project. The documentation can be found in
+further questions, check out Udacity's documentation for the project. The documentation can be found in
 [here.](https://docs.google.com/document/d/16IgOm4XprTaKxAa8w02y028oBECOoB1EI1ReddADEeY/pub?embedded=true)
