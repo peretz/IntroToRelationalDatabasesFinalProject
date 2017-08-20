@@ -28,7 +28,8 @@ def deleteMatches():
     except:
         print ("Error while deleting match table.")
         database.rollback()
-    database.close()
+    finally:
+        database.close()
 
 
 def deletePlayers():
@@ -41,7 +42,8 @@ def deletePlayers():
     except:
         print ("Error while deleting player table.")
         database.rollback()
-    database.close()
+    finally:
+        database.close()
 
 
 def countPlayers():
@@ -72,8 +74,8 @@ def registerPlayer(name):
     except:
         print ("Error while inserting a new player.")
         database.rollback()
-
-    database.close()
+    finally:
+        database.close()
 
 
 def playerStandings():
@@ -114,7 +116,8 @@ def reportMatch(winner, loser):
     except:
         print ("Error while inserting a new match result.")
         database.rollback()
-    database.close()
+    finally:
+        database.close()
 
 
 def swissPairings():
